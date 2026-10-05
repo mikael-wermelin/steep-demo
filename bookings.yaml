@@ -22,7 +22,7 @@ module:
       dimensions: ["this.*", "public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*"]
     - identifier: "departing_bookings"
       name: "Departing bookings"
-      description: "Number of non-cancelled bookings, dated by first departure."
+      description: "Number of non-cancelled bookings, dated by first departure. Excludes cancelled bookings."
       category: "Operations"
       type: "count"
       time: "bookings.first_departure_date"
@@ -53,7 +53,7 @@ module:
       dimensions: ["this.*", "public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*"]
     - identifier: "passengers"
       name: "Passengers travelling"
-      description: "Sum of pax on non-cancelled bookings, dated by first departure."
+      description: "Sum of pax on non-cancelled bookings, dated by first departure. Excludes cancelled bookings."
       category: "Operations"
       type: "sum"
       time: "bookings.first_departure_date"
@@ -65,19 +65,27 @@ module:
       dimensions: ["this.*", "public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*"]
     - identifier: "booking_sales"
       name: "Sales per booking total"
-      description: "Sum of booking sales in group currency, dated by first departure."
+      description: "Sum of booking sales in group currency, dated by first departure. Excludes cancelled bookings."
       category: "Commercial"
       type: "sum"
       time: "bookings.first_departure_date"
       value: "bookings.sales_global"
+      filters:
+        - column: "is_cancelled"
+          operator: "equals"
+          expression: "false"
       dimensions: ["this.*", "public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*"]
     - identifier: "gross_margin"
       name: "Gross margin"
-      description: "Sales minus costs in group currency, dated by first departure."
+      description: "Sales minus costs in group currency, dated by first departure. Excludes cancelled bookings."
       category: "Commercial"
       type: "sum"
       time: "bookings.first_departure_date"
       value: "bookings.margin_global"
+      filters:
+        - column: "is_cancelled"
+          operator: "equals"
+          expression: "false"
       dimensions: ["this.*", "public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*"]
     - identifier: "gross_margin_pct"
       name: "Gross margin %"

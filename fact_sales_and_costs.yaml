@@ -7,25 +7,37 @@ module:
   metrics:
     - identifier: "sales_by_departure"
       name: "Sales (by departure date)"
-      description: "Sum of sales in group currency, dated by first departure."
+      description: "Sum of sales in group currency, dated by first departure. Excludes cancelled bookings."
       category: "Commercial"
       type: "sum"
       time: "fact_sales_and_costs.first_departure_date"
       value: "fact_sales_and_costs.sales_global"
+      filters:
+        - column: "is_cancelled"
+          operator: "equals"
+          expression: "false"
       dimensions: ["public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*", "public.dim_product_group.*"]
     - identifier: "sales_by_booking"
       name: "Sales (by booking date)"
-      description: "Sum of sales in group currency, dated by when the booking was made. Shows order intake."
+      description: "Sum of sales in group currency, dated by when the booking was made. Excludes cancelled bookings."
       category: "Commercial"
       type: "sum"
       time: "fact_sales_and_costs.booking_date"
       value: "fact_sales_and_costs.sales_global"
+      filters:
+        - column: "is_cancelled"
+          operator: "equals"
+          expression: "false"
       dimensions: ["public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*", "public.dim_product_group.*"]
     - identifier: "costs_by_departure"
       name: "Costs (by departure date)"
-      description: "Sum of costs in group currency, dated by first departure."
+      description: "Sum of costs in group currency, dated by first departure. Excludes cancelled bookings."
       category: "Commercial"
       type: "sum"
       time: "fact_sales_and_costs.first_departure_date"
       value: "fact_sales_and_costs.cost_global"
+      filters:
+        - column: "is_cancelled"
+          operator: "equals"
+          expression: "false"
       dimensions: ["public.dim_booking.*", "public.dim_market.*", "public.dim_accommodation.*", "public.dim_transport.*", "public.dim_product_group.*"]
