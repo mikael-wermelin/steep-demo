@@ -1,0 +1,18 @@
+module:
+  schema: "public"
+  table: "dim_market"
+  identifier: "dim_market"
+  label: "Market"
+  description: "Country the booking was sold in and its currency."
+  dimensions:
+    - column: "sell_country"
+      type: "categorical"
+    - column: "sell_currency"
+      type: "categorical"
+  joinPaths:
+    - from: { column: "market_id" }
+      to: { table: "fact_sales_and_costs", column: "market_id" }
+      type: "one-to-many"
+    - from: { column: "market_id" }
+      to: { table: "bookings", column: "market_id" }
+      type: "one-to-many"

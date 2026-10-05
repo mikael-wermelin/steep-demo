@@ -1,0 +1,24 @@
+module:
+  schema: "public"
+  table: "dim_transport"
+  identifier: "dim_transport"
+  label: "Flight"
+  description: "Departure/arrival airports and cities, outbound airline."
+  dimensions:
+    - column: "departure_airport_code"
+      type: "categorical"
+    - column: "departure_city"
+      type: "categorical"
+    - column: "arrival_airport_code"
+      type: "categorical"
+    - column: "arrival_city"
+      type: "categorical"
+    - column: "outbound_airline_code"
+      type: "categorical"
+  joinPaths:
+    - from: { column: "transport_id" }
+      to: { table: "fact_sales_and_costs", column: "transport_id" }
+      type: "one-to-many"
+    - from: { column: "transport_id" }
+      to: { table: "bookings", column: "transport_id" }
+      type: "one-to-many"

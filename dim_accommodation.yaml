@@ -1,0 +1,18 @@
+module:
+  schema: "public"
+  table: "dim_accommodation"
+  identifier: "dim_accommodation"
+  label: "Hotel"
+  description: "Hotel name and resort area."
+  dimensions:
+    - column: "hotel_name"
+      type: "categorical"
+    - column: "area"
+      type: "categorical"
+  joinPaths:
+    - from: { column: "accommodation_id" }
+      to: { table: "fact_sales_and_costs", column: "accommodation_id" }
+      type: "one-to-many"
+    - from: { column: "accommodation_id" }
+      to: { table: "bookings", column: "accommodation_id" }
+      type: "one-to-many"

@@ -1,0 +1,19 @@
+module:
+  schema: "public"
+  table: "dim_booking"
+  identifier: "dim_booking"
+  label: "Booking"
+  description: "Booking status, channel, brand and creator (one row per booking)."
+  dimensions:
+    - column: "booking_status"
+      type: "categorical"
+    - column: "sales_platform"
+      type: "categorical"
+    - column: "brand"
+      type: "categorical"
+    - column: "created_by"
+      type: "categorical"
+  joinPaths:
+    - from: { column: "booking_id" }
+      to: { table: "fact_sales_and_costs", column: "booking_id" }
+      type: "one-to-many"

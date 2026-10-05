@@ -1,0 +1,17 @@
+module:
+  schema: "public"
+  table: "dim_product_group"
+  identifier: "dim_product_group"
+  label: "Product group"
+  description: "Accounting product group (Swedish source + English translation)."
+  dimensions:
+    - column: "product_group_code"
+      type: "categorical"
+    - column: "description_swedish"
+      type: "categorical"
+    - column: "description_english"
+      type: "categorical"
+  joinPaths:
+    - from: { column: "product_group_id" }
+      to: { table: "fact_sales_and_costs", column: "product_group_id" }
+      type: "one-to-many"
